@@ -51,13 +51,13 @@
     <legend>Dashboard</legend>
     <div class="row text-center">
         <div class="col-8">
-            <input id="search_input" class="form-control w-100" placeholder="Suche" aria-label="Search">
+            <input id="search_input" class="form-control" placeholder="Search" aria-label="Search">
         </div>
         <div class="col-2">
-            <button id="search" class="btn btn-outline-success w-100"><i class="fas fa-search"></i></button>
+            <button id="search" class="btn btn-outline-success"><i class="fas fa-search"></i></button>
         </div>
         <div class="col-2">
-            <button id="camera" class="btn btn-outline-success w-100" data-mdb-toggle="modal" data-mdb-target="#scanningModal"><i class="fas fa-camera"></i></button>
+            <button id="camera" class="btn btn-outline-success" data-mdb-toggle="modal" data-mdb-target="#scanningModal"><i class="fas fa-camera"></i></button>
         </div>
     </div>
     <table class="table table-hover table-strpped">
@@ -143,7 +143,7 @@
             <div class="modal-body">
               <div>
                 <!-- <a class="button" id="startButton">Start</a> -->
-                <a class="button" id="resetButton">Reset</a>
+                <!-- <a class="button" id="resetButton">Reset</a> -->
               </div>
         
               <div class="ratio ratio-1x1">
@@ -155,7 +155,7 @@
                   
             </div>
             <div class="modal-footer">
-              <button type="button" class="btn btn-secondary" data-mdb-dismiss="modal">Cancle</button>
+              <button id="cancleCamera" type="button" class="btn btn-secondary" data-mdb-dismiss="modal">Cancle</button>
               <button type="button" class="btn btn-primary">Submit</button>
             </div>
           </div>
@@ -187,7 +187,7 @@
       console.log('ZXing code reader initialized')
       codeReader.listVideoInputDevices()
         .then((videoInputDevices) => {
-          const sourceSelect = document.getElementById('sourceSelect')
+          // const sourceSelect = document.getElementById('sourceSelect')
           selectedDeviceId = videoInputDevices[0].deviceId
           if (videoInputDevices.length === 2) {
             //Select front camera on mobile (pixel 3a)
@@ -198,7 +198,7 @@
             codeReader.decodeFromVideoDevice(selectedDeviceId, 'video', (result, err) => {
               if (result) {
                 console.log(result)
-                document.getElementById('result').textContent = result.text
+                document.getElementById('result').textContent += result.text
               }
               if (err && !(err instanceof ZXing.NotFoundException)) {
                 console.error(err)
@@ -208,7 +208,7 @@
             console.log(`Started continous decode from camera with id ${selectedDeviceId}`)
           })
 
-          document.getElementById('resetButton').addEventListener('click', () => {
+          document.getElementById('cancleCamera').addEventListener('click', () => {
             codeReader.reset()
             document.getElementById('result').textContent = '';
             console.log('Reset.')
