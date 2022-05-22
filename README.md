@@ -1,1 +1,1 @@
-# pantry-space.github.io
+# pantrify.github.io
