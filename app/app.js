@@ -25,6 +25,14 @@ let STORAGEDB = [
 ]
 
 
+function putToLocalStorage(name, jsonData){
+    localStorage.setItem(name,JSON.stringify(jsonData))
+}
+
+function getFromLocalStorage(name){
+    return JSON.parse(localStorage.getItem(name))
+}
+
 // Persist changes if needed
 function createJsonBin(jsonData){
     let req = new XMLHttpRequest();
