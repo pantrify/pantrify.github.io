@@ -63,6 +63,28 @@ window.addEventListener('load', function () {
 
 });
 
+function populateItemTable(items){
+    var table = document.getElementById("itemTable")
+    var innerTable = "";
+    items.forEach(item => {
+        innerTable += '<tr>'+
+        '<td class="d-none d-lg-table-cell">'+item.brand+'</td>'+
+        '<td>'+item.name+'</td>'+
+        '<td>'+item.quantity+'</td>'+
+        '<td>'+item.expiry+'</td>'+
+        '<td>'+item.location+'</td>'+
+        '<td class="d-none d-lg-table-cell">2 days ago</td>'+
+        '<td class="d-none d-lg-table-cell">Tim Conrad</td>'+
+        '</tr>'
+    })
+    table.innerHTML = innerTable;
+}
+
+window.addEventListener('load', function () {
+    var items = getFromLocalStorage("storage_db")
+    populateItemTable(items);
+});
+
 function showAddItem(isEnabled){
     if(isEnabled){
         document.getElementById("addItemForm").style.display = ""
