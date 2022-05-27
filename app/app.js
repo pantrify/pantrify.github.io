@@ -54,6 +54,61 @@ window.addEventListener('load', function () {
 
 });
 
+function showAddItem(isEnabled){
+    if(isEnabled){
+        document.getElementById("addItemForm").style.display = ""
+    } else {
+        document.getElementById("addItemForm").style.display = "none"
+    }
+}
+
+function populateAddItemForm(item){
+    document.getElementById("addItemBarcode").value = item.barcode;
+}
+
+function showDisplayItem(isEnabled){
+    if(isEnabled){
+        document.getElementById("displayItemForm").style.display = ""
+    } else {
+        document.getElementById("displayItemForm").style.display = "none"
+    }
+}
+
+
+//Manage Items
+function lookupItemByBarcode(barcode){
+    var tmpdb = getFromLocalStorage("storage_db")
+
+    // Find item with barcode in database.
+    var db_item = tmpdb.find(element => element.barcode === barcode);
+    if(db_item !== undefined){
+        showDisplayItem(true)
+    } else {
+        console.warn("[*] Item "+barcode+" not in database.");
+        showAddItem(true)
+        var item = {
+            "barcode":barcode,
+            "name":"",
+            "brand":"",
+            "location":"",
+            "quantity":"",
+            "expiry":""
+        }
+        populateAddItemForm(item)
+    }
+}
+
+function addItemToDB(barcode, name, brand, location, quantity, expiry){
+    var item = {
+        "barcode":barcode,
+        "name":name,
+        "brand":brand,
+        "location":location,
+        "quantity":quantity,
+        "expiry":expiry
+    }
+}
+
 
 function putToLocalStorage(name, jsonData){
     localStorage.setItem(name,JSON.stringify(jsonData))

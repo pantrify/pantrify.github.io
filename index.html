@@ -155,36 +155,17 @@
               -ms-transform:scale(1);
               transform:scale(1);"></video>
             </div>
-
-            <div id="addItemForm">
-              <b>Add a new Item</b>
-              <div class="mb-2 row">
-                <label for="addItemBarcode" class="col-sm-2 col-form-label d-none d-md-block">Barcode</label>
-                <div class="col-sm-12 col-md-10">
-                  <input class="form-control form-control-sm" id="addItemBarcode" placeholder="Barcode">
-                </div>
-              </div>
-              <div class="mb-2 row">
-                <label for="addItemBrand" class="col-sm-2 col-form-label d-none d-md-block">Brand</label>
-                <div class="col-sm-12 col-md-10">
-                  <input class="form-control form-control-sm" id="addItemBrand" placeholder="Brand" list="datalistBrand">
-                  <datalist id="datalistBrand">
-                    <option value="Rewe">
-                    <option value="Balea">
-                  </datalist>
-                </div>
-              </div>
-              <div class="mb-2 row">
-                <label for="addItemName" class="col-sm-2 col-form-label d-none d-md-block">Name</label>
-                <div class="col-sm-12 col-md-10">
-                  <input class="form-control form-control-sm" id="addItemName" placeholder="Name">
-                </div>
+            
+            <div id="displayItemForm" style="display:none">
+              <div class="mb-2">
+                <div class="row"><b id="itemBarcode">018340182309182309</b></div>
+                <div class="row"><span><b id="itemBrand">Rewe</b>'s <b id="itemName">Pasta</b></span></div>
               </div>
               <div class="mb-2 row">
                 <label for="addItemLocation" class="col-sm-2 col-form-label d-none d-md-block">Location</label>
                 <div class="col-sm-12 col-md-10">
-                  <input class="form-control form-control-sm" id="addItemLocation" placeholder="Location" list="datalistBrand">
-                  <datalist id="datalistBrand">
+                  <input class="form-control form-control-sm" id="addItemLocation" placeholder="Location" list="datalistLocation" required value="Cellar 1">
+                  <datalist id="datalistLocation">
                     <option value="Pantry 1">
                     <option value="Cellar 1">
                   </datalist>
@@ -200,7 +181,57 @@
                 <label for="addItemQuantity" class="col-sm-2 col-form-label d-none d-md-block">Quantity</label>
                 <div class="input-group input-group-sm">
                   <button class="btn btn-outline-danger col-3" type="button" id="addItemQuantityMinus"><i class="fas fa-minus"></i></button>
-                  <input class="form-control form-control-sm text-center col-6" id="addItemQuantity" placeholder="Quantity" value="1">
+                  <input class="form-control form-control-sm text-center col-6" id="addItemQuantity" placeholder="Quantity" value="1" min="0" max="1000" required>
+                  <button class="btn btn-outline-success col-3" type="button" id="addItemQuantityPlus"><i class="fas fa-plus"></i></button>
+                </div>
+              </div>
+            </div>
+
+            <div id="addItemForm" style="display:none">
+              <b>Add a new Item</b>
+              <div class="mb-2 row">
+                <label for="addItemBarcode" class="col-sm-2 col-form-label d-none d-md-block">Barcode</label>
+                <div class="col-sm-12 col-md-10">
+                  <input class="form-control form-control-sm" id="addItemBarcode" placeholder="Barcode" required>
+                </div>
+              </div>
+              <div class="mb-2 row">
+                <label for="addItemBrand" class="col-sm-2 col-form-label d-none d-md-block">Brand</label>
+                <div class="col-sm-12 col-md-10">
+                  <input class="form-control form-control-sm" id="addItemBrand" placeholder="Brand" list="datalistBrand" required>
+                  <datalist id="datalistBrand">
+                    <option value="Rewe">
+                    <option value="Balea">
+                  </datalist>
+                </div>
+              </div>
+              <div class="mb-2 row">
+                <label for="addItemName" class="col-sm-2 col-form-label d-none d-md-block">Name</label>
+                <div class="col-sm-12 col-md-10">
+                  <input class="form-control form-control-sm" id="addItemName" placeholder="Name" required>
+                </div>
+              </div>
+              <div class="mb-2 row">
+                <label for="addItemLocation" class="col-sm-2 col-form-label d-none d-md-block">Location</label>
+                <div class="col-sm-12 col-md-10">
+                  <input class="form-control form-control-sm" id="addItemLocation" placeholder="Location" list="datalistLocation" required>
+                  <datalist id="datalistLocation">
+                    <option value="Pantry 1">
+                    <option value="Cellar 1">
+                  </datalist>
+                </div>
+              </div>
+              <div class="mb-2 row">
+                <label for="addItemExpiry" class="col-sm-2 col-form-label d-none d-md-block">Expiry</label>
+                <div class="col-sm-12 col-md-10">
+                  <input class="form-control form-control-sm" id="addItemExpiry" placeholder="Expiry">
+                </div>
+              </div>
+              <div class="mb-2 row">
+                <label for="addItemQuantity" class="col-sm-2 col-form-label d-none d-md-block">Quantity</label>
+                <div class="input-group input-group-sm">
+                  <button class="btn btn-outline-danger col-3" type="button" id="addItemQuantityMinus"><i class="fas fa-minus"></i></button>
+                  <input class="form-control form-control-sm text-center col-6" id="addItemQuantity" placeholder="Quantity" value="1" min="0" max="1000" required>
                   <button class="btn btn-outline-success col-3" type="button" id="addItemQuantityPlus"><i class="fas fa-plus"></i></button>
                 </div>
               </div>
@@ -252,19 +283,20 @@
             codeReader.decodeFromVideoDevice(selectedDeviceId, 'video', (result, err) => {
               if (result) {
                 console.log(result)
-                document.getElementById('addItemBarcode').value = result.text;
+                var barcode = result.text;
+                lookupItemByBarcode(barcode)
               }
-              if (err && !(err instanceof ZXing.NotFoundException)) {
-                console.error(err)
-                document.getElementById('addItemBarcode').value = err
-              }
+              // if (err && !(err instanceof ZXing.NotFoundException)) {
+              //   console.error(err)
+              //   document.getElementById('addItemBarcode').value = err
+              // }
             })
             console.log(`Started continous decode from camera with id ${selectedDeviceId}`)
           })
 
           document.getElementById('cancelCamera').addEventListener('click', () => {
             codeReader.reset()
-            document.getElementById('addItemBarcode').value = '';
+            // document.getElementById('addItemBarcode').value = '';
             console.log('Reset.')
           })
 
