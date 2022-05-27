@@ -156,13 +156,51 @@
               transform:scale(1);"></video>
             </div>
 
-            <label>Result:</label>
-            <pre><code id="result"></code></pre>
+            <div id="addItemForm">
+              <b>Add a new Item</b>
+              <div class="mb-2 row">
+                <label for="addItemBarcode" class="col-sm-2 col-form-label d-none d-md-block">Barcode</label>
+                <div class="col-sm-12 col-md-10">
+                  <input class="form-control form-control-sm" id="addItemBarcode" placeholder="Barcode">
+                </div>
+              </div>
+              <div class="mb-2 row">
+                <label for="addItemBrand" class="col-sm-2 col-form-label d-none d-md-block">Brand</label>
+                <div class="col-sm-12 col-md-10">
+                  <input class="form-control form-control-sm" id="addItemBrand" placeholder="Brand">
+                </div>
+              </div>
+              <div class="mb-2 row">
+                <label for="addItemName" class="col-sm-2 col-form-label d-none d-md-block">Name</label>
+                <div class="col-sm-12 col-md-10">
+                  <input class="form-control form-control-sm" id="addItemName" placeholder="Name">
+                </div>
+              </div>
+              <div class="mb-2 row">
+                <label for="addItemLocation" class="col-sm-2 col-form-label d-none d-md-block">Location</label>
+                <div class="col-sm-12 col-md-10">
+                  <input class="form-control form-control-sm" id="addItemLocation" placeholder="Location">
+                </div>
+              </div>
+              <div class="mb-2 row">
+                <label for="addItemExpiry" class="col-sm-2 col-form-label d-none d-md-block">Expiry</label>
+                <div class="col-sm-12 col-md-10">
+                  <input class="form-control form-control-sm" id="addItemExpiry" placeholder="Expiry">
+                </div>
+              </div>
+              <div class="mb-2 row">
+                <label for="addItemQuantity" class="col-sm-2 col-form-label d-none d-md-block">Quantity</label>
+                <div class="col-sm-12 col-md-10">
+                  <input class="form-control form-control-sm" id="addItemQuantity" placeholder="Quantity">
+                </div>
+              </div>
+            </div>
+            
 
           </div>
           <div class="modal-footer">
             <button id="cancelCamera" type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-            <button type="button" class="btn btn-primary">Submit</button>
+            <button type="button" class="btn btn-primary">Scan another</button>
           </div>
         </div>
       </div>
