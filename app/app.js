@@ -91,6 +91,7 @@ function lookupItemByBarcode(barcode){
     // Find item with barcode in database.
     var db_item = tmpdb.find(element => element.barcode === barcode);
     if(db_item !== undefined){
+        console.log("[+] Item found: "+db_item)
         showDisplayItem(true)
     } else {
         console.warn("[*] Item "+barcode+" not in database.");
