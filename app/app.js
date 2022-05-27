@@ -24,6 +24,36 @@ let STORAGEDB = [
     
 ]
 
+// Check if the user is setup otherwise open settings dialog.
+window.addEventListener('load', function () {
+    var user_settings = getFromLocalStorage("user_settings")
+    if(user_settings !== null){
+        var storage_db = getFromLocalStorage("storage_db")
+        if(storage_db !== null){
+            console.log("[+] all setup, application ready to go.")
+        } else {
+            //Offer dialog to setup template db
+            console.error("No storage_db defined.");
+
+            //Todo
+        }
+    } else {
+        // Offer dialog to setup app
+        console.error("[!] No user_settings defined.");
+        
+        //Todo
+
+        var storage_db = getFromLocalStorage("storage_db")
+        if(storage_db !== null){
+            console.log("[+] all setup, application ready to go.")
+        } else {
+            //Offer dialog to setup template db
+            console.error("[!] No storage_db defined.");
+        }
+    }
+
+});
+
 
 function putToLocalStorage(name, jsonData){
     localStorage.setItem(name,JSON.stringify(jsonData))
@@ -31,6 +61,26 @@ function putToLocalStorage(name, jsonData){
 
 function getFromLocalStorage(name){
     return JSON.parse(localStorage.getItem(name))
+}
+
+function getBackup(){
+    backup = {
+        user_settings : getFromLocalStorage("user_settings"),
+        storage_db : getFromLocalStorage("storage_db")
+    }
+}
+
+function download(filename, text) {
+    var element = document.createElement('a');
+    element.setAttribute('href', 'data:application/json;charset=utf-8,' + encodeURIComponent(text));
+    element.setAttribute('download', filename);
+
+    element.style.display = 'none';
+    document.body.appendChild(element);
+
+    element.click();
+
+    document.body.removeChild(element);
 }
 
 // Persist changes if needed
