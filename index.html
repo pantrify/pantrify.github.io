@@ -167,7 +167,11 @@
               <div class="mb-2 row">
                 <label for="addItemBrand" class="col-sm-2 col-form-label d-none d-md-block">Brand</label>
                 <div class="col-sm-12 col-md-10">
-                  <input class="form-control form-control-sm" id="addItemBrand" placeholder="Brand">
+                  <input class="form-control form-control-sm" id="addItemBrand" placeholder="Brand" list="datalistBrand">
+                  <datalist id="datalistBrand">
+                    <option value="Rewe">
+                    <option value="Balea">
+                  </datalist>
                 </div>
               </div>
               <div class="mb-2 row">
@@ -179,7 +183,11 @@
               <div class="mb-2 row">
                 <label for="addItemLocation" class="col-sm-2 col-form-label d-none d-md-block">Location</label>
                 <div class="col-sm-12 col-md-10">
-                  <input class="form-control form-control-sm" id="addItemLocation" placeholder="Location">
+                  <input class="form-control form-control-sm" id="addItemLocation" placeholder="Location" list="datalistBrand">
+                  <datalist id="datalistBrand">
+                    <option value="Pantry 1">
+                    <option value="Cellar 1">
+                  </datalist>
                 </div>
               </div>
               <div class="mb-2 row">
@@ -190,8 +198,10 @@
               </div>
               <div class="mb-2 row">
                 <label for="addItemQuantity" class="col-sm-2 col-form-label d-none d-md-block">Quantity</label>
-                <div class="col-sm-12 col-md-10">
-                  <input class="form-control form-control-sm" id="addItemQuantity" placeholder="Quantity">
+                <div class="input-group input-group-sm">
+                  <button class="btn btn-outline-danger col-3" type="button" id="addItemQuantityMinus"><i class="fas fa-minus"></i></button>
+                  <input class="form-control form-control-sm text-center col-6" id="addItemQuantity" placeholder="Quantity" value="1">
+                  <button class="btn btn-outline-success col-3" type="button" id="addItemQuantityPlus"><i class="fas fa-plus"></i></button>
                 </div>
               </div>
               <button class="btn btn-success" id="btnAddNewItem">Add New Item</button>
