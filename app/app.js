@@ -31,8 +31,6 @@ let STORAGEDB = [
     } 
 ]
 
-putToLocalStorage("storage_db", STORAGEDB)
-
 // Check if the user is setup otherwise open settings dialog.
 window.addEventListener('load', function () {
     var user_settings = getFromLocalStorage("user_settings")
@@ -64,6 +62,7 @@ window.addEventListener('load', function () {
 });
 
 function populateItemTable(items){
+    console.log(items);
     var table = document.getElementById("itemTable")
     var innerTable = "";
     items.forEach(item => {
@@ -73,8 +72,8 @@ function populateItemTable(items){
         '<td>'+item.quantity+'</td>'+
         '<td>'+item.expiry+'</td>'+
         '<td>'+item.location+'</td>'+
-        '<td class="d-none d-lg-table-cell">2 days ago</td>'+
-        '<td class="d-none d-lg-table-cell">Tim Conrad</td>'+
+        '<td class="d-none d-lg-table-cell">N/A Time</td>'+
+        '<td class="d-none d-lg-table-cell">N/A User</td>'+
         '</tr>'
     })
     table.innerHTML = innerTable;
@@ -143,19 +142,44 @@ function lookupItemByBarcode(barcode){
     }
 }
 
-function addItemToDB(barcode, name, brand, location, quantity, expiry){
-    var item = {
-        "barcode":barcode,
-        "name":name,
-        "brand":brand,
-        "location":location,
-        "quantity":quantity,
-        "expiry":expiry
-    }
-}
+// function addItemToDB(barcode, name, brand, location, quantity, expiry){
+//     var item = {
+//         "barcode":barcode,
+//         "name":name,
+//         "brand":brand,
+//         "location":location,
+//         "quantity":quantity,
+//         "expiry":expiry
+//     }
+// }
 
 document.getElementById('btnAddNewItem').addEventListener('click', () => {
     addItemFromFormToDatabase()
+    populateItemTable(getFromLocalStorage("storage_db"))
+})
+
+function updateItemToDB(item){
+    console.log("[+] Item to update:",item);
+    var tmp_db = getFromLocalStorage("storage_db")
+    tmp_db.forEach(function(tmp_item, i) { 
+        if (tmp_item.barcode === item.barcode){
+            console.log("[+] Old Item:",tmp_item);
+            tmp_db[i] = item}
+    });
+    putToLocalStorage("storage_db", tmp_db)
+}
+
+document.getElementById("updateItemBtn").addEventListener('click', () => {
+    var item = {
+        "barcode":document.getElementById("itemBarcode").textContent,
+        "name":document.getElementById("itemName").textContent,
+        "brand":document.getElementById("itemBrand").textContent,
+        "location":document.getElementById("itemLocation").value,
+        "quantity":document.getElementById("itemQuantity").value,
+        "expiry":document.getElementById("itemExpiry").value
+    }
+    updateItemToDB(item)
+    populateItemTable(getFromLocalStorage("storage_db"))
 })
 
 function addItemFromFormToDatabase(){
@@ -183,10 +207,12 @@ function getFromLocalStorage(name){
 }
 
 function getBackup(){
-    backup = {
+    var backup = {
         user_settings : getFromLocalStorage("user_settings"),
         storage_db : getFromLocalStorage("storage_db")
     }
+
+    return JSON.stringify(backup);
 }
 
 function download(filename, text) {
@@ -250,3 +276,32 @@ function updateJsonBin(jsonData){
     req.setRequestHeader("X-Master-Key", USER.API_KEY);
     req.send(JSON.stringify(jsonData));
 }
+
+// Quantity Buttons
+document.getElementById("addItemQuantityMinus").addEventListener('click', () => {
+    var quantityInput = document.getElementById("addItemQuantity")
+    var quantity = parseInt(quantityInput.value)
+    if(quantity-1 < 0){
+        return
+    }
+    quantityInput.value = quantity-1;
+})
+document.getElementById("addItemQuantityPlus").addEventListener('click', () => {
+    var quantityInput = document.getElementById("addItemQuantity")
+    var quantity = parseInt(quantityInput.value)
+    quantityInput.value = quantity+1;
+})
+
+document.getElementById("itemQuantityMinus").addEventListener('click', () => {
+    var quantityInput = document.getElementById("itemQuantity")
+    var quantity = parseInt(quantityInput.value)
+    if(quantity-1 < 0){
+        return
+    }
+    quantityInput.value = quantity-1;
+})
+document.getElementById("itemQuantityPlus").addEventListener('click', () => {
+    var quantityInput = document.getElementById("itemQuantity")
+    var quantity = parseInt(quantityInput.value)
+    quantityInput.value = quantity+1;
+})

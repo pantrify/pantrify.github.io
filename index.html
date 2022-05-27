@@ -61,24 +61,6 @@
           </tr>
         </thead>
         <tbody class="table-group-divider" id="itemTable">
-          <tr>
-            <td class="d-none d-lg-table-cell">Rewe</td>
-            <td>Tomaten</td>
-            <td>2</td>
-            <td>2 days</td>
-            <td>Fridge</td>
-            <td class="d-none d-lg-table-cell">2 days ago</td>
-            <td class="d-none d-lg-table-cell">Tim Conrad</td>
-          </tr>
-          <tr>
-            <td class="d-none d-lg-table-cell">Rewe</td>
-            <td>Paprika</td>
-            <td>3</td>
-            <td>5 days</td>
-            <td>Counter</td>
-            <td class="d-none d-lg-table-cell">2 days ago</td>
-            <td class="d-none d-lg-table-cell">Tim Conrad</td>
-          </tr>
         </tbody>
       </table>
     </div>
@@ -120,7 +102,7 @@
 
             <h5 class="mt-3">Backup</h5>
             <hr>
-            <button class="btn btn-success" onclick="download('pantrify.de.backup.json',localStorage.getItem(name))"><i class="fas fa-file-download"></i> Download Configuration</button>
+            <button class="btn btn-success" onclick="download('pantrify.de.backup.json',getBackup())"><i class="fas fa-file-download"></i> Download Configuration</button>
             <div class="input-group mt-2">
               <span class="input-group-text"><i class="fas fa-upload"></i></span>
               <input type="file" class="form-control" id="inputGroupFile04" aria-describedby="inputGroupFileAddon04" aria-label="Upload">
@@ -145,7 +127,7 @@
         <div class="modal-content">
           <div class="modal-header">
             <h5 class="modal-title" id="scanningModalLabel">Barcode Scanner</h5>
-            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" id="modalClose"></button>
           </div>
           <div class="modal-body">
             <div class="ratio ratio-1x1">
@@ -186,6 +168,7 @@
                   <button class="btn btn-outline-success col-3" type="button" id="itemQuantityPlus"><i class="fas fa-plus"></i></button>
                 </div>
               </div>
+              <button class="btn btn-success" id="updateItemBtn">Update</button>
             </div>
 
 
@@ -298,6 +281,13 @@
           })
 
           document.getElementById('cancelCamera').addEventListener('click', () => {
+            codeReader.reset()
+            // document.getElementById('addItemBarcode').value = '';
+            showAddItem(false)
+            showDisplayItem(false)
+            console.log('Reset.')
+          })
+          document.getElementById('modalClose').addEventListener('click', () => {
             codeReader.reset()
             // document.getElementById('addItemBarcode').value = '';
             showAddItem(false)
