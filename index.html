@@ -242,7 +242,7 @@
           </div>
           <div class="modal-footer">
             <button id="cancelCamera" type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-            <button type="button" class="btn btn-primary">Scan another</button>
+            <button id="scanAnother" type="button" class="btn btn-primary">Scan another</button>
           </div>
         </div>
       </div>
@@ -297,6 +297,11 @@
           document.getElementById('cancelCamera').addEventListener('click', () => {
             codeReader.reset()
             // document.getElementById('addItemBarcode').value = '';
+            console.log('Reset.')
+          })
+          document.getElementById('scanAnother').addEventListener('click', () => {
+            codeReader.reset()
+            // codeReader.start()
             console.log('Reset.')
           })
 
