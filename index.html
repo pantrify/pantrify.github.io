@@ -156,6 +156,7 @@
               transform:scale(1);"></video>
             </div>
             
+            <!-- Display Data about the item -->
             <div id="displayItemForm" style="display:none">
               <div class="mb-2">
                 <div class="row"><b id="itemBarcode">018340182309182309</b></div>
@@ -164,7 +165,7 @@
               <div class="mb-2 row">
                 <label for="addItemLocation" class="col-sm-2 col-form-label d-none d-md-block">Location</label>
                 <div class="col-sm-12 col-md-10">
-                  <input class="form-control form-control-sm" id="addItemLocation" placeholder="Location" list="datalistLocation" required value="Cellar 1">
+                  <input class="form-control form-control-sm" id="itemLocation" placeholder="Location" list="datalistLocation" required value="Cellar 1">
                   <datalist id="datalistLocation">
                     <option value="Pantry 1">
                     <option value="Cellar 1">
@@ -174,19 +175,21 @@
               <div class="mb-2 row">
                 <label for="addItemExpiry" class="col-sm-2 col-form-label d-none d-md-block">Expiry</label>
                 <div class="col-sm-12 col-md-10">
-                  <input class="form-control form-control-sm" id="addItemExpiry" placeholder="Expiry">
+                  <input class="form-control form-control-sm" id="itemExpiry" placeholder="Expiry">
                 </div>
               </div>
               <div class="mb-2 row">
                 <label for="addItemQuantity" class="col-sm-2 col-form-label d-none d-md-block">Quantity</label>
                 <div class="input-group input-group-sm">
-                  <button class="btn btn-outline-danger col-3" type="button" id="addItemQuantityMinus"><i class="fas fa-minus"></i></button>
-                  <input class="form-control form-control-sm text-center col-6" id="addItemQuantity" placeholder="Quantity" value="1" min="0" max="1000" required>
-                  <button class="btn btn-outline-success col-3" type="button" id="addItemQuantityPlus"><i class="fas fa-plus"></i></button>
+                  <button class="btn btn-outline-danger col-3" type="button" id="itemQuantityMinus"><i class="fas fa-minus"></i></button>
+                  <input class="form-control form-control-sm text-center col-6" id="itemQuantity" placeholder="Quantity" value="1" min="0" max="1000" required>
+                  <button class="btn btn-outline-success col-3" type="button" id="itemQuantityPlus"><i class="fas fa-plus"></i></button>
                 </div>
               </div>
             </div>
 
+
+            <!-- Add Item to DB -->
             <div id="addItemForm" style="display:none">
               <b>Add a new Item</b>
               <div class="mb-2 row">
@@ -297,11 +300,15 @@
           document.getElementById('cancelCamera').addEventListener('click', () => {
             codeReader.reset()
             // document.getElementById('addItemBarcode').value = '';
+            showAddItem(false)
+            showDisplayItem(false)
             console.log('Reset.')
           })
           document.getElementById('scanAnother').addEventListener('click', () => {
             codeReader.reset()
             // codeReader.start()
+            showAddItem(false)
+            showDisplayItem(false)
             console.log('Reset.')
           })
 

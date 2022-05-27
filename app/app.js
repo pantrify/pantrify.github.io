@@ -64,6 +64,7 @@ window.addEventListener('load', function () {
 });
 
 function showAddItem(isEnabled){
+    showDisplayItem(!isEnabled)
     if(isEnabled){
         document.getElementById("addItemForm").style.display = ""
     } else {
@@ -76,12 +77,22 @@ function populateAddItemForm(item){
 }
 
 function showDisplayItem(isEnabled){
+    showAddItem(!isEnabled)
     if(isEnabled){
         document.getElementById("displayItemForm").style.display = ""
     } else {
         document.getElementById("displayItemForm").style.display = "none"
     }
 }
+
+function populateAddItemForm(item){
+    document.getElementById("itemBarcode").value = item.barcode;
+    document.getElementById("itemBrand").value = item.brand;
+    document.getElementById("itemName").value = item.name;
+    document.getElementById("itemLocation").value = item.location;
+    document.getElementById("itemExpiry").value = item.expiry;
+}
+
 
 
 //Manage Items
@@ -93,6 +104,7 @@ function lookupItemByBarcode(barcode){
     if(db_item !== undefined){
         console.log("[+] Item found: "+db_item)
         showDisplayItem(true)
+        populate
     } else {
         console.warn("[*] Item "+barcode+" not in database.");
         showAddItem(true)
