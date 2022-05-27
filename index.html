@@ -306,9 +306,15 @@
           })
           document.getElementById('scanAnother').addEventListener('click', () => {
             codeReader.reset()
-            // codeReader.start()
             showAddItem(false)
             showDisplayItem(false)
+            codeReader.decodeFromVideoDevice(selectedDeviceId, 'video', (result, err) => {
+              if (result) {
+                console.log(result)
+                var barcode = result.text;
+                lookupItemByBarcode(barcode)
+              }
+            })
             console.log('Reset.')
           })
 

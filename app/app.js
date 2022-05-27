@@ -64,7 +64,6 @@ window.addEventListener('load', function () {
 });
 
 function showAddItem(isEnabled){
-    showDisplayItem(!isEnabled)
     if(isEnabled){
         document.getElementById("addItemForm").style.display = ""
     } else {
@@ -77,7 +76,6 @@ function populateAddItemForm(item){
 }
 
 function showDisplayItem(isEnabled){
-    showAddItem(!isEnabled)
     if(isEnabled){
         document.getElementById("displayItemForm").style.display = ""
     } else {
@@ -85,12 +83,13 @@ function showDisplayItem(isEnabled){
     }
 }
 
-function populateAddItemForm(item){
-    document.getElementById("itemBarcode").value = item.barcode;
-    document.getElementById("itemBrand").value = item.brand;
-    document.getElementById("itemName").value = item.name;
+function populateDisplayItemForm(item){
+    document.getElementById("itemBarcode").textContent = item.barcode;
+    document.getElementById("itemBrand").textContent = item.brand;
+    document.getElementById("itemName").textContent = item.name;
     document.getElementById("itemLocation").value = item.location;
     document.getElementById("itemExpiry").value = item.expiry;
+    document.getElementById("itemQuantity").value = item.quantity;
 }
 
 
@@ -102,12 +101,14 @@ function lookupItemByBarcode(barcode){
     // Find item with barcode in database.
     var db_item = tmpdb.find(element => element.barcode === barcode);
     if(db_item !== undefined){
-        console.log("[+] Item found: "+db_item)
+        console.log("[+] Item found: ",db_item)
         showDisplayItem(true)
-        populate
+        showAddItem(false)
+        populateDisplayItemForm(db_item)
     } else {
         console.warn("[*] Item "+barcode+" not in database.");
         showAddItem(true)
+        showDisplayItem(false)
         var item = {
             "barcode":barcode,
             "name":"",
@@ -129,6 +130,25 @@ function addItemToDB(barcode, name, brand, location, quantity, expiry){
         "quantity":quantity,
         "expiry":expiry
     }
+}
+
+document.getElementById('btnAddNewItem').addEventListener('click', () => {
+    addItemFromFormToDatabase()
+})
+
+function addItemFromFormToDatabase(){
+    var item = {
+        "barcode":document.getElementById("addItemBarcode").value,
+        "name":document.getElementById("addItemName").value,
+        "brand":document.getElementById("addItemBrand").value,
+        "location":document.getElementById("addItemLocation").value,
+        "quantity":document.getElementById("addItemQuantity").value,
+        "expiry":document.getElementById("addItemExpiry").value
+    }
+    console.log(item);
+    var tmp_db = getFromLocalStorage("storage_db")
+    tmp_db.push(item)
+    putToLocalStorage("storage_db", tmp_db)
 }
 
 
