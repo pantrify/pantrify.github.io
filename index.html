@@ -194,6 +194,7 @@
                   <input class="form-control form-control-sm" id="addItemQuantity" placeholder="Quantity">
                 </div>
               </div>
+              <button class="btn btn-success" id="btnAddNewItem">Add New Item</button>
             </div>
             
 
@@ -227,7 +228,7 @@
     window.addEventListener('load', function () {
       let selectedDeviceId;
       const codeReader = new ZXing.BrowserMultiFormatReader()
-      console.log('ZXing code reader initialized')
+      console.log('ZXing Barcode Reader initialized...')
       codeReader.listVideoInputDevices()
         .then((videoInputDevices) => {
           // const sourceSelect = document.getElementById('sourceSelect')
@@ -241,11 +242,11 @@
             codeReader.decodeFromVideoDevice(selectedDeviceId, 'video', (result, err) => {
               if (result) {
                 console.log(result)
-                document.getElementById('result').textContent += result.text + "\n"
+                document.getElementById('addItemBarcode').value = result.text;
               }
               if (err && !(err instanceof ZXing.NotFoundException)) {
                 console.error(err)
-                document.getElementById('result').textContent = err
+                document.getElementById('addItemBarcode').value = err
               }
             })
             console.log(`Started continous decode from camera with id ${selectedDeviceId}`)
@@ -253,7 +254,7 @@
 
           document.getElementById('cancelCamera').addEventListener('click', () => {
             codeReader.reset()
-            document.getElementById('result').textContent = '';
+            document.getElementById('addItemBarcode').value = '';
             console.log('Reset.')
           })
 
