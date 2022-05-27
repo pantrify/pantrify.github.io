@@ -21,7 +21,14 @@ let ARTICEL_EXAMPLE = {
 }
 
 let STORAGEDB = [
-    
+    {
+        "barcode":"4005240040058",
+        "name":"Product Name",
+        "brand":"Dummy",
+        "location":"Cellar 1",
+        "quantity":"1",
+        "expiry":"-1"
+    } 
 ]
 
 // Check if the user is setup otherwise open settings dialog.
