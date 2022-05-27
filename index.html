@@ -280,6 +280,13 @@
             console.log(`Started continous decode from camera with id ${selectedDeviceId}`)
           })
 
+
+          document.addEventListener("visibilitychange",  function() {
+            if(document.hidden){
+              codeReader.reset()
+            }
+        });
+
           document.getElementById('cancelCamera').addEventListener('click', () => {
             codeReader.reset()
             // document.getElementById('addItemBarcode').value = '';

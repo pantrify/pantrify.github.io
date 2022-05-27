@@ -58,7 +58,6 @@ window.addEventListener('load', function () {
             console.error("[!] No storage_db defined.");
         }
     }
-
 });
 
 function populateItemTable(items){
