@@ -31,6 +31,8 @@ let STORAGEDB = [
     } 
 ]
 
+putToLocalStorage("storage_db", STORAGEDB)
+
 // Check if the user is setup otherwise open settings dialog.
 window.addEventListener('load', function () {
     var user_settings = getFromLocalStorage("user_settings")
